@@ -1,0 +1,24 @@
+crud register database
+✔ create
+✔ delete
+✔ update
+✔ select
+
+
+INSERT INTO countries (NAME) VALUES ('argentina') , ('colombia'),('chile');
+SELECT * FROM countries;
+
+INSERT INTO users (id_country, email, name) 
+  VALUES (2, 'foo@foo.com', 'fooziman'), (3, 'bar@bar.com', 'barziman'); 
+SELECT * FROM users;
+
+DELETE FROM users WHERE email = 'bar@bar.com';
+SELECT * FROM users;
+
+UPDATE users SET email = 'foo@foo.foo', NAME = 'fooz' WHERE id_users = 1;
+SELECT * FROM users;
+
+SELECT * FROM users INNER JOIN  countries ON users.id_country = countries.id_country;
+
+SELECT u.id_users AS ID, u.email, u.name AS fullname, C.name 
+FROM users u INNER JOIN  countries C ON u.id_country = C.id_country;

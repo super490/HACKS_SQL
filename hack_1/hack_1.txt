@@ -1,0 +1,19 @@
+design register database
+
+tables:
+- table countries
+- table users
+
+
+create table countries(
+  id_country serial PRIMARY KEY,
+  NAME varchar(50) NOT null  
+);
+
+CREATE TABLE users(
+ id_users serial PRIMARY KEY,
+ id_country integer NOT null,
+ email varchar(100) NOT null,
+ NAME varchar (50) NOT null,
+ FOREIGN KEY (id_country) REFERENCES countries (id_country)   
+);

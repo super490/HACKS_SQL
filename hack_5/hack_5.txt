@@ -1,0 +1,114 @@
+design ecommerce database
+
+tables:
+- table countries
+- table roles
+- table taxes
+- table offers
+- table discounts
+- table payments
+- table customers
+- table invoice_status
+- table products
+- table product_customers
+- table invoices
+- table orders
+
+
+
+CREATE TABLE countries (
+  id_country SERIAL primary KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE roles (
+  id_role SERIAL primary KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE taxes (
+  id_tax SERIAL PRIMARY KEY,
+  percentage INT
+ );
+ 
+CREATE TABLE offers (
+  id_offer SERIAL PRIMARY KEY,
+  status VARCHAR(50)
+ );
+ 
+CREATE TABLE discounts (
+  id_discount SERIAL PRIMARY KEY,
+  status VARCHAR(50),
+  percentage INT
+ );
+ 
+CREATE TABLE payments (
+  id_payment SERIAL PRIMARY KEY,
+  "type" VARCHAR(50)
+);
+
+CREATE TABLE customers (
+  id_customer SERIAL primary key,
+  email VARCHAR(50),
+  id_country INTEGER,
+  id_role INTEGER,
+  name VARCHAR(50),
+  AGE INTEGER,
+  password VARCHAR(50),
+  physical_addres VARCHAR(50),
+  foreign key (id_country) references countries (id_country),
+  foreign key (id_role) references roles (id_role) 
+);
+
+CREATE TABLE invoice_status (
+  id_invoice_status SERIAL PRIMARy KEY,
+  status VARCHAR(50)
+);
+
+CREATE TABLE products (
+  id_product SERIAL PRIMARY KEY,
+  id_discount INTEGER,
+  id_offer INTEGER,
+  id_tax INTEGER,
+  name VARCHAR(50),
+  details VARCHAR(50),
+  minimun_stock INTEGER,
+  maximun_stock INTEGER,
+  current_stock INTEGER,
+  price INTEGER,
+  price_with_tax INTEGER,
+  foreign key (id_tax) references taxes (id_tax),
+  foreign key (id_offer) references offers (id_offer),
+  foreign key (id_discount) references discounts (id_discount)
+);
+
+create table products_customers (
+    id_customer INTEGER,
+    id_product INTEGER,
+    foreign key (id_customer) references customers (id_customer),
+    foreign key (id_product) references products (id_product),
+    PRIMARY KEY (id_customer, id_product)
+);
+
+CREATE TABLE invoices (
+  id_invoices SERIAL PRIMARY KEY,
+  id_customer INTEGER,
+  id_payment INTEGER,
+  id_invoice_status INTEGER,
+  DATA VARCHAR(50),
+  total_to_pay INTEGER,
+  foreign key (id_customer) references customers (id_customer),
+  foreign key (id_payment) references payments (id_payment),
+  foreign key (id_invoice_status) references invoice_status (id_invoice_status)
+);
+
+CREATE TABLE orders (
+  id_order SERIAL PRIMARY KEY,
+  id_invoices INTEGER,
+  id_product INTEGER,
+  detail VARCHAR(50),
+  amount INTEGER,
+  price INTEGER,
+  foreign key (id_invoices) references invoices (id_invoices),
+  foreign key (id_product) references products (id_product)
+);

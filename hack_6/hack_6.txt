@@ -1,0 +1,128 @@
+crud ecommerce database
+
+✔insert:
+- insert 3 record in all tables
+- create 3 invoices
+
+✔delete:
+- delete last first user
+
+✔update:
+- update last user
+- update all taxes
+- update all prices
+
+
+
+INSERT INTO countries (name) values ('EEUU') , ('Canada'),('China');
+SELECT * FROM countries;
+
+insert into roles (name) values ('Hombre'),('Mujer'),('Otro');
+SELECT * FROM roles;
+
+insert into taxes (percentage) values ('5') , ('20'),('25');
+SELECT * FROM taxes;
+
+insert into offers (status) values ('Activo'),('Suspendido'),('Vencido');
+SELECT * FROM offers;
+
+insert into discounts(status,percentage) values('activo',10),('Suspendido',5),('Vencido',30);
+SELECT * FROM discounts;
+
+insert into payments(type) values ('tarjeta'),('Efectivo'),('Transferencia');
+SELECT * FROM payments;
+
+insert into customers (email,id_country,id_role,name,age,password,physical_addres) values 
+('alex123@business.com',1,1,'Alexander',45,'Alex55%','Caracas'),
+('jose345@business.com',2,2,'José',29,'Jose33%','Yaracuy'),
+('karen678@business.com',3,3,'Karen',42,'Karen00%','Mérida');
+SELECT * FROM customers;
+
+insert into invoice_status (status) values ('Aceptado') , ('Rechazado'),('Suspendido');
+SELECT * FROM invoice_status;
+
+INSERT into products
+(id_discount, id_offer, id_tax, NAME, details, minimun_stock, maximun_stock, current_stock, price, price_with_tax)
+ VALUES
+(1,1,1,'Laptop Asus', 'Gaming', 10, 10, 12, 1300, 1400),
+(2,2,1,'Laptop Dell', 'Office', 5, 12, 15, 800, 850),
+(3,1,3,'Laptop Hp', 'Chromebook', 3, 20, 20, 400, 425);
+SELECT * from products;
+
+iNSERT INTO products_customers ( id_customer, id_product) VALUES (1,2), (1,1), (2,2);
+SELECT* from products_customers;
+
+INSERT INTO invoices (id_customer, id_payment, id_invoice_status, data, total_to_pay) 
+VALUES
+  (1, 2, 1, '17/01/2025', 2600),
+  (2, 3, 1, '14/02/2025',1400),
+  (3,2, 3, '20/02/2025', 400);
+SELECT * FROM invoices;
+
+INSERT into orders (
+  id_invoices, id_product, detail, amount, price) 
+  VALUES
+  (1,1, 'Ventas de Laptop Asus', 3, 4200),
+  (2, 2, 'Ventas de Laptop Dell', 4, 3400),
+  (3,3, 'Ventas de Laptop Hp', 10, 4250);
+SELECT * from orders;
+
+
+delete last first user:
+
+DELETE FROM orders
+WHERE id_invoices IN (
+    SELECT id_invoices
+    FROM invoices
+    WHERE id_customer IN (
+        SELECT id_customer
+        FROM customers
+        WHERE name = 'Alexander' OR name = 'Karen'
+    )
+);
+
+DELETE FROM products_customers
+WHERE id_customer IN (
+    SELECT id_customer
+    FROM customers
+    WHERE name = 'Alexander' OR name = 'Karen'
+);
+
+DELETE FROM invoices
+WHERE id_customer IN (
+    SELECT id_customer
+    FROM customers
+    WHERE name = 'Alexander' OR name = 'Karen'
+);
+
+DELETE FROM customers
+WHERE name = 'Alexander' OR name = 'Karen';
+SELECT * FROM customers;
+
+
+update last user:
+
+UPDATE customers
+SET
+    email = 'jose.nuevo@business.com',
+    age = 30,
+    physical_addres = 'Barquisimeto'
+WHERE
+    id_customer = 2;
+SELECT * FROM customers;
+
+
+update all taxes:
+
+UPDATE taxes SET percentage = 28 WHERE id_tax = 1;
+UPDATE taxes SET percentage = 15 WHERE id_tax = 2;
+UPDATE taxes SET percentage = 12 WHERE id_tax = 3;
+SELECT * from taxes;
+
+
+update all prices:
+
+UPDATE products SET price_with_tax = 1500 WHERE id_product = 1;
+UPDATE products SET price_with_tax =  900 WHERE id_product = 2;
+UPDATE products SET price_with_tax = 450 WHERE id_product = 3;
+SELECT * from products;

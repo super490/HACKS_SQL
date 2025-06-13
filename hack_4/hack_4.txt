@@ -1,0 +1,30 @@
+crud contact database
+
+✔insert:
+- insert 5 record in countries
+- insert 3 record in priorities
+- insert 3 record in contact_request
+
+✔delete;
+- delete last user:
+
+✔update:
+- update first user:
+
+
+
+INSERT INTO countries (NAME) VALUES ('Venezuela'),('Rusia'),('España'),('Italia'),('Portugal');
+SELECT * FROM countries;
+
+INSERT INTO priorities (type_name) VALUES ('Alta_prioridad'), ('Normal_prioridad'),('Baja_prioridad');
+SELECT * FROM priorities;
+
+INSERT INTO contact_request (id_email, id_country, id_priority,NAME,DETAIL,physical_adrees) VALUES 
+(1,1,'Manuel','Programador Frontend', 'Acarigua'),(2,2, 'Deiber', 'Programador Backend','Barquisimeto'),(3,3,'Mariana','Programadora Fullstack', 'Maracaibo'); 
+SELECT * from contact_request;
+
+DELETE FROM contact_request WHERE NAME = 'Mariana';
+SELECT * FROM contact_request;
+
+UPDATE contact_request SET DETAIL = 'Especialista en Bases de Datos', physical_adrees = 'Valencia' WHERE id_country = 1;
+SELECT * FROM contact_request;
